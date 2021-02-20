@@ -1,12 +1,14 @@
 const { v4 } = require('uuid')
 const express = require('express')
 const { Client } = require('pg')
+const cors = require('cors')
 
 
 const app = express()
 const port = 3000
 
 app.use(express.json())
+app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 
 // TODO: this is to check the api is up or not. Will be removed during deployment
@@ -18,9 +20,9 @@ app.post('/contact', (request, response) => {
     let lead = {
         id: v4(),
         fullName: data.userName,
-        company: data.company,
-        contactNumber: data.phoneNumber,
-        country: data.country,
+        company: data.company ? null: data.company,
+        contactNumber: data.phoneNumber ? null: data.phoneNumber,
+        country: data.country ? null: data.country,
         query: data.query,
         queryDescription: data.queryDescription,
         email: data.email,
